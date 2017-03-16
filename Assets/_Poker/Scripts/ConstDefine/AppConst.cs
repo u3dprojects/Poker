@@ -20,7 +20,7 @@ namespace LuaFramework {
         /// </summary>
 		public static readonly bool UpdateMode = false;                      //更新模式-默认关闭 
 		public static readonly bool LuaByteMode = false;                     //Lua字节码模式-默认关闭 
-		public static readonly bool LuaBundleMode = true;                   //Lua代码AssetBundle模式-默认关闭 
+		public static readonly bool LuaBundleMode = false;                   //Lua代码AssetBundle模式-默认关闭 
 
         public const int TimerInterval = 1;
         public const int GameFrameRate = 30;                       //游戏帧频
