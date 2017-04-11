@@ -302,7 +302,7 @@ namespace LuaFramework {
         /// </summary>
         public static bool CheckEnvironment() {
 #if UNITY_EDITOR
-            int resultId = Util.CheckRuntimeFile();
+            int resultId = CheckRuntimeFile();
             if (resultId == -1) {
                 Debug.LogError("没有找到框架所需要的资源，单击Game菜单下Build xxx Resource生成！！");
                 EditorApplication.isPlaying = false;
