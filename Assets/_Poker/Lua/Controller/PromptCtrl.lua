@@ -1,6 +1,7 @@
 require "Common/define"
 
 require "3rd/pblua/login_pb"
+require "3rd/pblua/DemoMsg_pb"
 require "3rd/pbc/protobuf"
 
 local sproto = require "3rd/sproto/sproto"
@@ -169,19 +170,39 @@ function PromptCtrl.TestSendPbc()
 end
 
 --测试发送PBLUA--
-function PromptCtrl.TestSendPblua()
-    local login = login_pb.LoginRequest();
-    login.id = 2000;
-    login.name = 'game';
-    login.email = 'jarjin@163.com';
+function PromptCtrl.TestSendPblua1()
+    local login = DemoMsg_pb.DemoRequest();
+    login.IP = "192.168.1.111";
+    login.accountId = 'Test0001';
+    login.serverId = 20101;
     local msg = login:SerializeToString();
     ----------------------------------------------------------------
     local buffer = ByteBuffer.New();
-    buffer:WriteShort(Protocal.Message);
-    buffer:WriteByte(ProtocalType.PB_LUA);
+    buffer:WriteShort(Protocal.Msg);
+    buffer:WriteShort(0);
+    -- buffer:WriteByte(ProtocalType.PB_LUA);
     buffer:WriteBuffer(msg);
     networkMgr:SendMessage(buffer);
+    log("=== PromptCtrl.TestSendPblua end ===");
 end
+
+function PromptCtrl.TestSendPblua()
+    local login = DemoMsg_pb.DemoRequest();
+    login.IP = "192.168.1.111";
+    login.accountId = 'Test0001';
+    login.serverId = 20101;
+    local msg = login:SerializeToString();
+    ----------------------------------------------------------------
+    local buffer = MsgPoker.New();
+    buffer:SetCmd(Protocal.Msg);
+    buffer:SetStatus(0);
+    -- buffer:WriteByte(ProtocalType.PB_LUA);
+    buffer:SetBody(msg);
+    networkMgr:SendMessage(buffer);
+    log("=== PromptCtrl.TestSendPblua end ===");
+end
+
+
 
 --测试发送二进制--
 function PromptCtrl.TestSendBinary()

@@ -35,7 +35,7 @@ end
 
 --初始化完成，发送链接服务器信息--
 function Game.OnInitOK()
-    AppConst.SocketPort = 2012;
+    AppConst.SocketPort = 9999;
     AppConst.SocketAddress = "127.0.0.1";
     networkMgr:SendConnect();
 
@@ -53,10 +53,10 @@ function Game.OnInitOK()
 
     CtrlManager.Init();
     local ctrl = CtrlManager.GetCtrl(CtrlNames.Prompt);
-    if ctrl ~= nil and AppConst.ExampleMode == 1 then
+    if ctrl ~= nil and (AppConst.ExampleMode == 1 or AppConst.ExampleMode == true) then
         ctrl:Awake();
     end
-    logWarn('LuaFramework InitOK--->>>');
+    logWarn('数据初始化Game.lua InitOK--->>>');
 end
 
 --测试协同--

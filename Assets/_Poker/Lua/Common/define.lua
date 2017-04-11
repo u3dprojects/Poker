@@ -17,7 +17,7 @@ ProtocalType = {
 	SPROTO = 3,
 }
 --当前使用的协议类型--
-TestProtoType = ProtocalType.BINARY;
+TestProtoType = ProtocalType.PB_LUA;
 
 Util = LuaFramework.Util;
 AppConst = LuaFramework.AppConst;
@@ -31,3 +31,6 @@ networkMgr = LuaHelper.GetNetManager();
 
 WWW = UnityEngine.WWW;
 GameObject = UnityEngine.GameObject;
+
+-- 自定协议
+MsgPoker = Poker.MsgPoker;

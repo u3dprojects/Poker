@@ -132,5 +132,17 @@ namespace LuaFramework {
         public void Flush() {
             writer.Flush();
         }
+
+		public void WriteInt2(int v) {
+			writer.Write(BitConverter.GetBytes((ushort)v));
+		}
+
+		public void WriteShort2(ushort v) {
+			writer.Write(BitConverter.GetBytes((ushort)v));
+		}
+
+		public void WriteBytes2(byte[] v) {
+			writer.Write(v);
+		}
     }
 }

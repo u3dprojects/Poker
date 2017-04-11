@@ -22,6 +22,7 @@ namespace LuaFramework {
         /// </summary>
         /// <param name="type"></param>
         public void CreatePanel(string name, LuaFunction func = null) {
+			Debug.Log ("== pnl name = " + name);
             StartCoroutine(StartCreatePanel(name, func));
         }
 

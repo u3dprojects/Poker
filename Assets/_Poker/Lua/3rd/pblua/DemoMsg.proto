@@ -1,0 +1,15 @@
+package com.demo.protobuf;
+option java_outer_classname="DemoMsg";
+
+
+// code = 1111
+message DemoRequest{
+	required string IP = 1;				//联网IP地址
+	required string accountId = 2;		//帐号id
+	required int32 serverId=3;				//服务器唯一标识
+}
+
+message DemoResponse{
+	required string name = 1;				//昵称
+	required int32 lvl=2;					//等级
+}

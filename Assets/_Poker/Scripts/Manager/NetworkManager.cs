@@ -81,5 +81,12 @@ namespace LuaFramework {
             SocketClient.OnRemove();
             Debug.Log("~NetworkManager was destroy");
         }
+
+		/// <summary>
+		/// ·¢ËÍSOCKETÏûÏ¢
+		/// </summary>
+		public void SendMessage(Poker.MsgPoker msg) {
+			SocketClient.SendMessage(msg);
+		}
     }
 }

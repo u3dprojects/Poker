@@ -233,4 +233,17 @@ public class SocketClient {
         SessionSend(buffer.ToBytes());
         buffer.Close();
     }
+
+	/// <summary>
+	/// 发送消息
+	/// </summary>
+	public void SendMessage(Poker.MsgPoker msg){
+		if (client != null && client.Connected) {
+			//NetworkStream stream = client.GetStream(); 
+			byte[] payload = msg.ToArray();
+			outStream.BeginWrite(payload, 0, payload.Length, new AsyncCallback(OnWrite), null);
+		} else {
+			Debug.LogError("client.connected----->>false");
+		}
+	}
 }

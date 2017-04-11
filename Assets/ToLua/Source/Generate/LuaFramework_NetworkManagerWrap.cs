@@ -116,6 +116,13 @@ public class LuaFramework_NetworkManagerWrap
 				obj.SendMessage(arg0);
 				return 0;
 			}
+			else if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(LuaFramework.NetworkManager), typeof(Poker.MsgPoker)))
+			{
+				LuaFramework.NetworkManager obj = (LuaFramework.NetworkManager)ToLua.ToObject(L, 1);
+				Poker.MsgPoker arg0 = (Poker.MsgPoker)ToLua.ToObject(L, 2);
+				obj.SendMessage(arg0);
+				return 0;
+			}
 			else if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(LuaFramework.NetworkManager), typeof(LuaFramework.ByteBuffer)))
 			{
 				LuaFramework.NetworkManager obj = (LuaFramework.NetworkManager)ToLua.ToObject(L, 1);
