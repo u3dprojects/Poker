@@ -1,0 +1,14 @@
+我先说下我的环境：
+python 2.7.3   
+protobuf 2.4.1
+protoc-gen-lua 最新版（貌似不更新了）
+
+下载地址：http://www.ulua.org/download.html
+
+解压到跟我相同路径，然后起cmd，到D:\protobuf-2.4.1\python 目录下，执行下面命令
+
+python setup.py build
+python setup.py install
+
+
+然后打开框架，执行 Game/Build Protobuf-lua-gen File 菜单即可。
