@@ -5,6 +5,7 @@ require "Common/functions"
 Event = require 'events'
 
 require "3rd/pblua/login_pb"
+require "3rd/protobuf/DemoMsg_pb"
 require "3rd/pbc/protobuf"
 
 local sproto = require "3rd/sproto/sproto"
@@ -95,7 +96,10 @@ function Network.DemoResponse(buffer)
   local data = msgPoker:GetLuaData();
   local msg = DemoMsg_pb.DemoResponse();
   msg:ParseFromString(data);
+  
   log('DemoResponse: protocal:>'.. tostring(msgPoker:GetCmd()) ..' msg:>' .. msg.name .. "," .. type(msg));
+  coroutine.wait(0.005)
+  this.DemoMsg();
 end
 
 --PBC登录--
@@ -155,4 +159,20 @@ function Network.Unload()
     Event.RemoveListener(Protocal.Exception);
     Event.RemoveListener(Protocal.Disconnect);
     logWarn('Unload Network...');
+end
+
+function Network.DemoMsg()
+    local login = DemoMsg_pb.DemoRequest();
+    login.IP = "192.168.1.111";
+    login.accountId = 'Test0001';
+    login.serverId = 20101;
+    local msg = login:SerializeToString();
+    ----------------------------------------------------------------
+    local buffer = MsgPoker.New();
+    buffer:SetCmd(Protocal.Msg);
+    buffer:SetStatus(0);
+    -- buffer:WriteByte(ProtocalType.PB_LUA);
+    buffer:SetBody(msg);
+    networkMgr:SendMessage(buffer);
+    log("=== Network.DemoMsg end ===");
 end
