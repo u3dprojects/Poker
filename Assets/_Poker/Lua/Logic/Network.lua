@@ -23,7 +23,8 @@ function Network.Start()
     Event.AddListener(Protocal.Connect, this.OnConnect); 
     Event.AddListener(Protocal.Message, this.OnMessage); 
     Event.AddListener(Protocal.Exception, this.OnException); 
-    Event.AddListener(Protocal.Disconnect, this.OnDisconnect); 
+    Event.AddListener(Protocal.Disconnect, this.OnDisconnect);
+    Event.AddListener(Protocal.Msg, this.DemoResponse); 
 end
 
 --Socket消息--
@@ -86,6 +87,15 @@ function Network.TestLoginPblua(buffer)
     local msg = login_pb.LoginResponse();
     msg:ParseFromString(data);
 	log('TestLoginPblua: protocal:>'..protocal..' msg:>'..msg.id);
+end
+
+function Network.DemoResponse(buffer)
+  local msgPoker = MsgPoker.New();
+  msgPoker:Init(Protocal.Msg,buffer);
+  local data = msgPoker:GetLuaData();
+  local msg = DemoMsg_pb.DemoResponse();
+  msg:ParseFromString(data);
+  log('DemoResponse: protocal:>'.. tostring(msgPoker:GetCmd()) ..' msg:>' .. msg.name .. "," .. type(msg));
 end
 
 --PBC登录--
