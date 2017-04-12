@@ -7,9 +7,13 @@ public class Poker_MsgPokerWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(Poker.MsgPoker), typeof(System.Object));
+		L.RegFunction("GetCmd", GetCmd);
 		L.RegFunction("SetCmd", SetCmd);
+		L.RegFunction("GetStatus", GetStatus);
 		L.RegFunction("SetStatus", SetStatus);
 		L.RegFunction("SetBody", SetBody);
+		L.RegFunction("GetLuaData", GetLuaData);
+		L.RegFunction("Init", Init);
 		L.RegFunction("New", _CreatePoker_MsgPoker);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.EndClass();
@@ -40,6 +44,23 @@ public class Poker_MsgPokerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetCmd(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			Poker.MsgPoker obj = (Poker.MsgPoker)ToLua.CheckObject(L, 1, typeof(Poker.MsgPoker));
+			ushort o = obj.GetCmd();
+			LuaDLL.lua_pushnumber(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int SetCmd(IntPtr L)
 	{
 		try
@@ -49,6 +70,23 @@ public class Poker_MsgPokerWrap
 			ushort arg0 = (ushort)LuaDLL.luaL_checknumber(L, 2);
 			obj.SetCmd(arg0);
 			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetStatus(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			Poker.MsgPoker obj = (Poker.MsgPoker)ToLua.CheckObject(L, 1, typeof(Poker.MsgPoker));
+			ushort o = obj.GetStatus();
+			LuaDLL.lua_pushnumber(L, o);
+			return 1;
 		}
 		catch(Exception e)
 		{
@@ -98,6 +136,41 @@ public class Poker_MsgPokerWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: Poker.MsgPoker.SetBody");
 			}
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetLuaData(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			Poker.MsgPoker obj = (Poker.MsgPoker)ToLua.CheckObject(L, 1, typeof(Poker.MsgPoker));
+			LuaInterface.LuaByteBuffer o = obj.GetLuaData();
+			ToLua.Push(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Init(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 3);
+			Poker.MsgPoker obj = (Poker.MsgPoker)ToLua.CheckObject(L, 1, typeof(Poker.MsgPoker));
+			ushort arg0 = (ushort)LuaDLL.luaL_checknumber(L, 2);
+			LuaFramework.ByteBuffer arg1 = (LuaFramework.ByteBuffer)ToLua.CheckObject(L, 3, typeof(LuaFramework.ByteBuffer));
+			obj.Init(arg0, arg1);
+			return 0;
 		}
 		catch(Exception e)
 		{

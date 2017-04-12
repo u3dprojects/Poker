@@ -159,17 +159,17 @@ public class SocketClient {
         memStream.Write(bytes, 0, length);
         //Reset to beginning
         memStream.Seek(0, SeekOrigin.Begin);
-        while (RemainingBytes() > 2) {
-            ushort messageLen = reader.ReadUInt16();
+        while (RemainingBytes() > 4) {
+			uint messageLen = reader.ReadUInt32 ();
             if (RemainingBytes() >= messageLen) {
                 MemoryStream ms = new MemoryStream();
                 BinaryWriter writer = new BinaryWriter(ms);
-                writer.Write(reader.ReadBytes(messageLen));
+				writer.Write(reader.ReadBytes((int)messageLen));
                 ms.Seek(0, SeekOrigin.Begin);
                 OnReceivedMessage(ms);
             } else {
                 //Back up the position two bytes
-                memStream.Position = memStream.Position - 2;
+                memStream.Position = memStream.Position - 4;
                 break;
             }
         }

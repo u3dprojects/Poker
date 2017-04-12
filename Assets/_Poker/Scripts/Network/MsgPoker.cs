@@ -2,6 +2,7 @@
 using System.Collections;
 using System.IO;
 using LuaInterface;
+using LuaFramework;
 
 namespace Poker {
 	public class MsgPoker{
@@ -9,8 +10,18 @@ namespace Poker {
 		ushort status;
 		byte[] body;
 
+		LuaByteBuffer luaData;
+
+		public ushort GetCmd(){
+			return this.cmd;
+		}
+
 		public void SetCmd(ushort v) {
 			this.cmd = v;
+		}
+
+		public ushort GetStatus(){
+			return this.status;
 		}
 
 		public void SetStatus(ushort v) {
@@ -23,6 +34,16 @@ namespace Poker {
 
 		public void SetBody(LuaByteBuffer strBuffer) {
 			body = strBuffer.buffer;
+		}
+
+		public LuaByteBuffer GetLuaData(){
+			return this.luaData;
+		}
+
+		public void Init(ushort cmd,ByteBuffer buffer){
+			this.cmd = cmd;
+			this.status = buffer.ReadShort ();
+			this.luaData = buffer.ReadBufferLua();
 		}
 
 		[NoToLua]

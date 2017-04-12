@@ -133,16 +133,11 @@ namespace LuaFramework {
             writer.Flush();
         }
 
-		public void WriteInt2(int v) {
-			writer.Write(BitConverter.GetBytes((ushort)v));
-		}
-
-		public void WriteShort2(ushort v) {
-			writer.Write(BitConverter.GetBytes((ushort)v));
-		}
-
-		public void WriteBytes2(byte[] v) {
-			writer.Write(v);
+		[NoToLua]
+		public LuaByteBuffer ReadBufferLua() {
+			int lens = (int)(stream.Length - stream.Position);
+			byte[] bytes = reader.ReadBytes(lens);
+			return new LuaByteBuffer(bytes);
 		}
     }
 }
