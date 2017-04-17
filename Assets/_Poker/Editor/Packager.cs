@@ -69,9 +69,10 @@ public class Packager {
         }
         AssetDatabase.Refresh();
 
-        if (AppConst.ExampleMode) {
-            HandleExampleBundle(target);
-        }
+//        if (AppConst.ExampleMode) {
+//            HandleExampleBundle(target);
+//        }
+
         if (AppConst.LuaBundleMode) {
             HandleBundle();
         } else {
@@ -393,10 +394,6 @@ public class Packager {
     }
 
 	static void BuildProtobufFile(string dir) {
-		if (!AppConst.ExampleMode) {
-			UnityEngine.Debug.LogError("若使用编码Protobuf-lua-gen功能，需要自己配置外部环境！！");
-			return;
-		}
 		paths.Clear(); files.Clear(); Recursive(dir);
 
 		string protoc = "d:/protobuf-2.4.1/src/protoc.exe";

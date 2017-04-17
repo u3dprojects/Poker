@@ -11,7 +11,7 @@ namespace LuaFramework {
         /// 如果想删掉框架自带的例子，那这个例子模式必须要
         /// 关闭，否则会出现一些错误。
         /// </summary>
-		public static readonly bool ExampleMode = true;                       //例子模式 
+		// public static readonly bool ExampleMode = true;                       //例子模式 
 
         /// <summary>
         /// 如果开启更新模式，前提必须启动框架自带服务器端。

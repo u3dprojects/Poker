@@ -22,9 +22,7 @@ namespace LuaFramework {
 		/// 初始化
 		/// </summary>
 		void Init() {
-			if (AppConst.ExampleMode) {
-				InitGui();
-			}
+			InitGui();
 			DontDestroyOnLoad(gameObject);  //防止销毁自己
 
 			CheckExtractResource(); //释放资源
@@ -36,7 +34,7 @@ namespace LuaFramework {
 		/// 初始化GUI
 		/// </summary>
 		public void InitGui() {
-			string name = "GUI";
+			string name = "GameGUI";
 			GameObject gui = GameObject.Find(name);
 			if (gui != null) return;
 

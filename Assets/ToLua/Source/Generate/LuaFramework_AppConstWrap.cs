@@ -18,7 +18,6 @@ public class LuaFramework_AppConstWrap
 		L.RegVar("AppPrefix", get_AppPrefix, null);
 		L.RegVar("WebUrl", get_WebUrl, null);
 		L.RegVar("DebugMode", get_DebugMode, null);
-		L.RegVar("ExampleMode", get_ExampleMode, null);
 		L.RegVar("UpdateMode", get_UpdateMode, null);
 		L.RegVar("LuaByteMode", get_LuaByteMode, null);
 		L.RegVar("LuaBundleMode", get_LuaBundleMode, null);
@@ -145,20 +144,6 @@ public class LuaFramework_AppConstWrap
 		try
 		{
 			LuaDLL.lua_pushboolean(L, LuaFramework.AppConst.DebugMode);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_ExampleMode(IntPtr L)
-	{
-		try
-		{
-			LuaDLL.lua_pushboolean(L, LuaFramework.AppConst.ExampleMode);
 			return 1;
 		}
 		catch(Exception e)

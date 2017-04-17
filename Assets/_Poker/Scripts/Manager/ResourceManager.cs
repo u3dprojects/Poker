@@ -11,18 +11,18 @@ namespace LuaFramework {
         /// 初始化
         /// </summary>
         public void initialize(Action func) {
-            if (AppConst.ExampleMode) {
-                //------------------------------------Shared--------------------------------------
-                string uri = Util.DataPath + "shared" + AppConst.ExtName;
-                Debug.LogWarning("LoadFile::>> " + uri);
-
-                shared = AssetBundle.LoadFromFile(uri);
-#if UNITY_5
-                shared.LoadAsset("Dialog", typeof(GameObject));
-#else
-                shared.Load("Dialog", typeof(GameObject));
-#endif
-            }
+//            if (AppConst.ExampleMode) {
+//                //------------------------------------Shared--------------------------------------
+//                string uri = Util.DataPath + "shared" + AppConst.ExtName;
+//                Debug.LogWarning("LoadFile::>> " + uri);
+//
+//                shared = AssetBundle.LoadFromFile(uri);
+//#if UNITY_5
+//                shared.LoadAsset("Dialog", typeof(GameObject));
+//#else
+//                shared.Load("Dialog", typeof(GameObject));
+//#endif
+//            }
             if (func != null) func();    //资源初始化完成，回调游戏管理器，执行后续操作 
         }
 
