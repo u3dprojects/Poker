@@ -1,16 +1,7 @@
 
-require "Common/define"
-require "Common/protocal"
-require "Common/functions"
 Event = require 'events'
 
-require "3rd/pblua/login_pb"
 require "3rd/protobuf/DemoMsg_pb"
-require "3rd/pbc/protobuf"
-
-local sproto = require "3rd/sproto/sproto"
-local core = require "sproto.core"
-local print_r = require "3rd/sproto/print_r"
 
 Network = {};
 local this = Network;
@@ -80,16 +71,6 @@ function Network.TestLoginBinary(buffer)
 	log('TestLoginBinary: protocal:>'..protocal..' str:>'..str);
 end
 
---PBLUA登录--
-function Network.TestLoginPblua(buffer)
-	local protocal = buffer:ReadByte();
-	local data = buffer:ReadBuffer();
-
-    local msg = login_pb.LoginResponse();
-    msg:ParseFromString(data);
-	log('TestLoginPblua: protocal:>'..protocal..' msg:>'..msg.id);
-end
-
 function Network.DemoResponse(buffer)
   local msgPoker = MsgPoker.New();
   msgPoker:Init(Protocal.Msg,buffer);
@@ -100,56 +81,6 @@ function Network.DemoResponse(buffer)
   log('DemoResponse: protocal:>'.. tostring(msgPoker:GetCmd()) ..' msg:>' .. msg.name .. "," .. type(msg));
   coroutine.wait(0.005)
   this.DemoMsg();
-end
-
---PBC登录--
-function Network.TestLoginPbc(buffer)
-	local protocal = buffer:ReadByte();
-	local data = buffer:ReadBuffer();
-
-    local path = Util.DataPath.."lua/3rd/pbc/addressbook.pb";
-
-    local addr = io.open(path, "rb")
-    local buffer = addr:read "*a"
-    addr:close()
-    protobuf.register(buffer)
-    local decode = protobuf.decode("tutorial.Person" , data)
-
-    print(decode.name)
-    print(decode.id)
-    for _,v in ipairs(decode.phone) do
-        print("\t"..v.number, v.type)
-    end
-	log('TestLoginPbc: protocal:>'..protocal);
-end
-
---SPROTO登录--
-function Network.TestLoginSproto(buffer)
-	local protocal = buffer:ReadByte();
-	local code = buffer:ReadBuffer();
-
-    local sp = sproto.parse [[
-    .Person {
-        name 0 : string
-        id 1 : integer
-        email 2 : string
-
-        .PhoneNumber {
-            number 0 : string
-            type 1 : integer
-        }
-
-        phone 3 : *PhoneNumber
-    }
-
-    .AddressBook {
-        person 0 : *Person(id)
-        others 1 : *Person
-    }
-    ]]
-    local addr = sp:decode("AddressBook", code)
-    print_r(addr)
-	log('TestLoginSproto: protocal:>'..protocal);
 end
 
 --卸载网络监听--

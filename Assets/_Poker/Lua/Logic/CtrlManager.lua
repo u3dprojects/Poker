@@ -1,6 +1,13 @@
-require "Common/define"
-require "Controller/PromptCtrl"
-require "Controller/MessageCtrl"
+
+CtrlNames = {
+  Prompt = "PromptCtrl",
+  Message = "CtrlModel"
+}
+
+PanelNames = {
+  "PromptPanel",  
+  "MessagePanel",
+}
 
 CtrlManager = {};
 local this = CtrlManager;
@@ -8,6 +15,8 @@ local ctrlList = {};	--控制器列表--
 
 function CtrlManager.Init()
 	logWarn("CtrlManager.Init----->>>");
+	
+	gloabMgr.Require(CtrlNames,"Controller");
 	ctrlList[CtrlNames.Prompt] = PromptCtrl.New();
 	ctrlList[CtrlNames.Message] = MessageCtrl.New();
 	return this;
