@@ -1,12 +1,10 @@
 
 CtrlNames = {
-  Prompt = "PromptCtrl",
-  Message = "CtrlModel"
+  Prompt = "CtrlModel"
 }
 
 PanelNames = {
-  "PromptPanel",  
-  "MessagePanel",
+  "PromptPanel", 
 }
 
 CtrlManager = {};
@@ -18,7 +16,6 @@ function CtrlManager.Init()
 	
 	gloabMgr.Require(CtrlNames,"Controller");
 	ctrlList[CtrlNames.Prompt] = PromptCtrl.New();
-	ctrlList[CtrlNames.Message] = MessageCtrl.New();
 	return this;
 end
 
