@@ -19,22 +19,17 @@ function MyApp.New( ... )
   return self;    --返回自身
 end
 
+-- 构造
 function MyApp:ctor()
-  gloabMgr.Require("Logic.CtrlManager");
+end
 
-  --注册LuaView--
-  gloabMgr.Require(PanelNames,"View");
-
+-- 运行
+function MyApp:run()
   --测试第三方库功能--
   local func = function() self:test_coroutine(); end
   coroutine.start(func);
-
-  CtrlManager.Init();
-  local ctrl = CtrlManager.GetCtrl(CtrlNames.Prompt);
-  if ctrl ~= nil then
-    ctrl:Awake();
-  end
-  logWarn('数据初始化Game.lua InitOK--->>>');
+  
+  mgrUI:OpenView("Prompt");
 end
 
 
@@ -55,5 +50,4 @@ function MyApp:test()
 end
 
 
-
---endregion
+return MyApp;

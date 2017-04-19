@@ -1,4 +1,8 @@
 --- 需要先加载的部分
+-- Anchor : Canyon
+-- Time : 2017-04-18 11:25
+-- Desc : 一个脚本对应一个界面(脚本里面去加载界面)，这里主要控制lua脚本 
+-- Modify :
 do
   gloabMgr = require("Common/Import");
   
@@ -33,5 +37,11 @@ do
   };
   
   gloabMgr.Require(tabCommon);
+  
+  local sysEx = {
+    "System/LuaClass",
+  }
+  
+  gloabMgr.Require(sysEx);
 end;
 

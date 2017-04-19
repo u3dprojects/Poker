@@ -19,9 +19,8 @@ function Game.OnInitOK()
     AppConst.SocketAddress = "127.0.0.1";
     networkMgr:SendConnect();
 
-    gloabMgr.Require("Logic.MyApp");
-    
-    MyApp.New();
+    gloabMgr.Require("Logic.Global");
+    myApp:run();
 end
 
 --销毁--

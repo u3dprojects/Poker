@@ -10,6 +10,7 @@ networkMgr = LuaHelper.GetNetManager();
 
 WWW = UnityEngine.WWW;
 GameObject = UnityEngine.GameObject;
+Screen = UnityEngine.Screen;
 
 -- 自定协议
 MsgPoker = Poker.MsgPoker;
