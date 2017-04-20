@@ -28,25 +28,25 @@ function MyApp:run()
   --测试第三方库功能--
   local func = function() self:test_coroutine(); end
   coroutine.start(func);
-  
+
   mgrUI:OpenView("PnlLogin");
 end
 
 
 --测试协同--
 function MyApp:test_coroutine()
-  logWarn("1111");
+  logWarn("test_coroutine 1111");
   coroutine.wait(1);
-  logWarn("2222");
+  logWarn("test_coroutine 2222");
 
   local www = WWW("http://doc.ulua.org/readme.txt");
   coroutine.www(www);
-  log("myapp = " .. www.text);
+  log("myapp test_coroutine = " .. www.text);
 end
 
 --测试打印方法--
 function MyApp:test()
-  logWarn("x:>" .. self.x .. " y:>" .. self.y);
+  logWarn("test x:>" .. self.x .. " y:>" .. self.y);
 end
 
 

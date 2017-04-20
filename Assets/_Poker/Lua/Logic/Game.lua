@@ -17,6 +17,7 @@ local WWW = UnityEngine.WWW;
 function Game.OnInitOK()
     AppConst.SocketPort = 9999;
     AppConst.SocketAddress = "127.0.0.1";
+    networkMgr:OnInit();
     networkMgr:SendConnect();
 
     gloabMgr.Require("Logic.Global");

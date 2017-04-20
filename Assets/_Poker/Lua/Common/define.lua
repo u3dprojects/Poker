@@ -9,6 +9,7 @@ soundMgr = LuaHelper.GetSoundManager();
 networkMgr = LuaHelper.GetNetManager();
 
 WWW = UnityEngine.WWW;
+WWWForm = UnityEngine.WWWForm;
 GameObject = UnityEngine.GameObject;
 Screen = UnityEngine.Screen;
 

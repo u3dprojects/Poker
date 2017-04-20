@@ -82,17 +82,20 @@ do
       if string.find(msg, msgTip) then
         print(msgTip);
       else
-        print("load lua error: " .. msg);
+        print("load lua error, in " .. modname);
       end
     end
 
     local status, data = xpcall(funcMain,funcError);
 
-    local tp = type(data)
-
-    if status and (tp == "table" or tp == "userdata") then
-      recordRequire[modname] = data;
-      return data;
+    if status then
+      local tp = type(data);
+      if (tp == "table" or tp == "userdata") then
+        recordRequire[modname] = data;
+        return data;
+      end
+    else
+      error(data);
     end
   end
 
