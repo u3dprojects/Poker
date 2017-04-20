@@ -27,11 +27,14 @@ do
   --    this.btnOpen = transform:FindChild("Open").gameObject;
   --    this.gridParent = transform:FindChild('ScrollView/Grid');
   end
-  
+
   function PnlLogin.OnClickBtnYK(gobj)
-  	mgrWwwGame:login("abcd",function(callWww,pars)
+    mgrWwwGame:login("abcd",function(callWww,pars)
       print(callWww.text);
       local t = json.decode(callWww.text);
+      AppConst.SocketPort = 9999;
+      AppConst.SocketAddress = "127.0.0.1";
+      networkMgr:SendConnect();
     end);
   end
 
