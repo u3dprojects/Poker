@@ -30,15 +30,21 @@ namespace LuaFramework {
         /// ´´½¨Ãæ°å
         /// </summary>
         IEnumerator StartCreatePanel(string name, LuaFunction func = null) {
-            AssetBundle bundle = ResManager.LoadBundle(name);
+			UnityEngine.Object objLoad = ResManager.LoadPrefab (name);
 
-            name += "Panel";
             GameObject prefab = null;
-#if UNITY_5
-            prefab = bundle.LoadAsset(name, typeof(GameObject)) as GameObject;
-#else
-            prefab = bundle.Load(name, typeof(GameObject)) as GameObject;
-#endif
+			AssetBundle bundle = null;
+			if (objLoad is AssetBundle) {
+				bundle = objLoad as AssetBundle;
+				#if UNITY_5
+				prefab = bundle.LoadAsset (name, typeof(GameObject)) as GameObject;
+				#else
+				prefab = bundle.Load(name, typeof(GameObject)) as GameObject;
+				#endif
+			} else {
+				prefab = objLoad as GameObject;
+			}
+
             yield return new WaitForEndOfFrame();
 
             if (Parent.FindChild(name) != null || prefab == null) {

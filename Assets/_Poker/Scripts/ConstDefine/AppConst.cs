@@ -7,6 +7,10 @@ namespace LuaFramework {
     public class AppConst {
 		public static readonly bool DebugMode = true;                        //调试模式-用于内部测试
 
+		// 编辑模式下，是否加载AssetBundle
+		[LuaInterface.NoToLua]
+		public static readonly bool EdtiorLoadAsset = false;
+
         /// <summary>
         /// 如果想删掉框架自带的例子，那这个例子模式必须要
         /// 关闭，否则会出现一些错误。

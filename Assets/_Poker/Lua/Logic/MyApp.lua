@@ -29,7 +29,7 @@ function MyApp:run()
   local func = function() self:test_coroutine(); end
   coroutine.start(func);
   
-  mgrUI:OpenView("Prompt");
+  mgrUI:OpenView("PnlLogin");
 end
 
 
