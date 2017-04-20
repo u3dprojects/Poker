@@ -5,11 +5,6 @@ require "Logic/Include"
 Game = {};
 local this = Game;
 
-local game; 
-local transform;
-local gameObject;
-local WWW = UnityEngine.WWW;
-
 --初始化完成，发送链接服务器信息--
 function Game.OnInitOK()
     AppConst.SocketPort = 9999;
