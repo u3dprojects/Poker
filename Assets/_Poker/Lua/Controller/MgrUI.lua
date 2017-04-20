@@ -46,7 +46,7 @@ do
 
   -- 打开界面 (传递视图的lua脚本名)
   function MgrUI:OpenView(assetname)
-    panelMgr:CreatePanel(assetname, function(gobj) self:OnCreate(gobj) end);
+    createPanel(assetname, function(gobj) self:OnCreate(gobj) end);
   end
 
   function MgrUI:OnCreate(gobj)
