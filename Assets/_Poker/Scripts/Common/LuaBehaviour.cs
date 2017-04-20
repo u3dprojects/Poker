@@ -33,7 +33,6 @@ namespace LuaFramework {
 		public void OnInit(AssetBundle bundle, string text = null) {
             this.data = text;   //初始化附加参数
             this.bundle = bundle; //初始化
-            Debug.LogWarning("OnInit---->>>" + name + " text:>" + text);
         }
 
         /// <summary>

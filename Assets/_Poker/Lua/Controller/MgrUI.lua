@@ -14,7 +14,6 @@ do
   -- LT - luaTable view视图中的UI资源脚本
   LTUiName = {
     PnlLogin = "PnlLogin",
-    PromptPanel = "PromptPanel",
   }
 
   --构建函数--
@@ -42,7 +41,7 @@ do
     -- 模型在UI中实际缩放大小
     self.modelScaleInUI = self.resolutionScale / self.guiScale;
 
-    gloabMgr.Require(LuaUiName);
+    gloabMgr.Require(LTUiName,self.vwLuaRoot);
   end
 
   -- 打开界面 (传递视图的lua脚本名)

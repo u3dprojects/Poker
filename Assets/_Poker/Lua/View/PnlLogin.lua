@@ -15,18 +15,18 @@ do
     transform = obj.transform;
 
     this.InitPanel();
-    logWarn("Awake lua--->>"..gameObject.name);
   end
 
   --初始化面板--
   function PnlLogin.InitPanel()
-    this.btnOpen = transform:FindChild("Open").gameObject;
-    this.gridParent = transform:FindChild('ScrollView/Grid');
+--    this.btnOpen = transform:FindChild("Open").gameObject;
+--    this.gridParent = transform:FindChild('ScrollView/Grid');
   end
 
   --单击事件--
   function PnlLogin.OnDestroy()
     logWarn("OnDestroy---->>>");
   end
-
+  
+  return PnlLogin;
 end

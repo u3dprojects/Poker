@@ -61,7 +61,6 @@ namespace LuaFramework {
             go.AddComponent<LuaBehaviour>().OnInit(bundle);
 
             if (func != null) func.Call(go);
-            Debug.Log("StartCreatePanel------>>>>" + name);
         }
 
         /// <summary>
