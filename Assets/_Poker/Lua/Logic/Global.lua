@@ -10,3 +10,5 @@ mgrUI = gloabMgr.RequireOne("Controller.MgrUI").New();
 mgrWww = gloabMgr.RequireOne("Net/WWWNetwork");
 
 mgrWwwGame = gloabMgr.RequireOne("Net/WWWGame");
+
+TimeEx = gloabMgr.RequireOne("System/TimeEx");

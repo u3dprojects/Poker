@@ -29,6 +29,7 @@ do
     "System/LuaClass",
     "System/Math",
     "System/TableEx",
+    "System/TimeEx",
   }
 
   gloabMgr.Require(locTab);

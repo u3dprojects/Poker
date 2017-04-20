@@ -29,6 +29,8 @@ end
 -- 运行
 function MyApp:run()
   --测试第三方库功能--
+  math.randomseed(os.time());
+  
   local func = function() self:test_coroutine(); end
   coroutine.start(func);
 
