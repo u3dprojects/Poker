@@ -6,7 +6,7 @@ using Resources = Core.Kernel.Resources;
 
 namespace LuaFramework {
     public class ResourceManager : Manager {
-        private AssetBundle shared;
+		private AssetBundle shared = null;
 
         /// <summary>
         /// 初始化

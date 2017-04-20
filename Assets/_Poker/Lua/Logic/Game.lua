@@ -1,9 +1,6 @@
 
 require "Logic/Include"
 
-local json = require "cjson"
-local util = require "3rd/cjson/util"
-
 --管理器--
 Game = {};
 local this = Game;

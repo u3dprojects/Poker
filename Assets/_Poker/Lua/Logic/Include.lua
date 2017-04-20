@@ -51,7 +51,7 @@ do
   --    "Net/Network",
   --  });
 
-  table.append(locTab,"Net/Network");
+  table.append(locTab,"Net/Network","Net/WWWNetwork","Net/WWWGame");
 
   gloabMgr.Require(locTab);
 

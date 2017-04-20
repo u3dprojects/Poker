@@ -324,5 +324,12 @@ namespace LuaFramework {
 #endif            
             return true;
         }
+
+		// 取得UUID
+		static public string UUID{
+			get{
+				return Toolkits.UUIDEx.uuid;
+			}
+		}
     }
 }

@@ -6,3 +6,7 @@
 myApp = gloabMgr.RequireOne("Logic.MyApp").New();
 
 mgrUI = gloabMgr.RequireOne("Controller.MgrUI").New();
+
+mgrWww = gloabMgr.RequireOne("Net/WWWNetwork");
+
+mgrWwwGame = gloabMgr.RequireOne("Net/WWWGame");

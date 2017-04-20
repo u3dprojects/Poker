@@ -2,6 +2,9 @@
 --Author : Canyon
 --Date   : 2017/04/18
 
+local json = require "cjson"
+local util = require "3rd/cjson/util"
+
 MyApp = {}
 
 --这句是重定义元表的索引，就是说有了这句，这个才是一个类。
@@ -42,6 +45,11 @@ function MyApp:test_coroutine()
   local www = WWW("http://doc.ulua.org/readme.txt");
   coroutine.www(www);
   log("myapp test_coroutine = " .. www.text);
+  
+  mgrWwwGame:login("abcd",function(callWww,pars)
+    print(callWww.text);
+    local t = json.decode(callWww.text);
+  end);
 end
 
 --测试打印方法--
