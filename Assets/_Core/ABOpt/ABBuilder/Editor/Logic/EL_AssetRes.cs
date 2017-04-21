@@ -20,11 +20,18 @@ public class EL_AssetRes{
 	//序列化属性
 	SerializedProperty m_Property;
 
+	List<UnityEngine.Object> m_list = null;
+
+	// 平台
 	BuildTarget m_buildTarget = BuildTarget.StandaloneWindows;
 
-	public void DrawView(SerializedObject obj,SerializedProperty field){
+	// 相对目录(要打包的资源必须在该目录下)
+	string m_rootRelative = "Builders";
+
+	public void DrawView(SerializedObject obj,SerializedProperty field,List<UnityEngine.Object> list){
 		this.m_Object = obj;
 		this.m_Property = field;
+		this.m_list = list;
 
 		if (m_Object == null) {
 			return;
@@ -40,12 +47,23 @@ public class EL_AssetRes{
 		m_buildTarget = (BuildTarget)EditorGUILayout.EnumPopup ("平台 : ",m_buildTarget);
 		EG_GUIHelper.FG_Space(10);
 
+		EG_GUIHelper.FEG_BeginH ();
+		{
+			m_rootRelative = EditorGUILayout.TextField ("相对目录 : ", m_rootRelative);
+
+			GUIStyle style = new GUIStyle ();
+			style.normal.textColor = Color.yellow;
+			EditorGUILayout.LabelField ("(资源文件夹节点里必须有个[相对目录]，不然不会Build！！！)", style);
+		}
+		EG_GUIHelper.FEG_EndH ();
+		EG_GUIHelper.FG_Space(10);
+
 		//开始检查是否有修改
 		EditorGUI.BeginChangeCheck();
 
 		//显示属性
 		//第二个参数必须为true，否则无法显示子节点即List内容
-		EditorGUILayout.PropertyField(m_Property,new GUIContent("资源所在文件夹 : "),true);
+		EditorGUILayout.PropertyField(m_Property,new GUIContent("资源文件夹 : "),true);
 
 		//结束检查是否有修改
 		if (EditorGUI.EndChangeCheck())
@@ -66,24 +84,29 @@ public class EL_AssetRes{
 	}
 
 	void DoMake(){
-		BuildOnew (null);
-	}
-
-	void BuildOnew(UnityEngine.Object one){
-		if (one == null) {
+		int lens = m_Property.arraySize;
+		if (lens <= 0) {
 			EditorUtility.DisplayDialog ("Tips", "请选择来源文件夹!!!", "Okey");
 			return;
 		}
 
+		for (int i = 0; i < lens; i++) {
+			BuildOnew (m_list[i]);
+		}
+	}
+
+	void BuildOnew(UnityEngine.Object one){
+		if (one == null)
+			return;
+		
 		System.Type typeFolder = typeof(UnityEditor.DefaultAsset);
 
 		System.Type typeOrg = one.GetType ();
 
 		if (typeOrg != typeFolder) {
-			EditorUtility.DisplayDialog ("Tips", "来源文件不是文件夹,请选择来源文件夹!!!", "Okey");
+			EditorUtility.DisplayDialog ("Tips", "来源文件不是文件夹!!!", "Okey");
 			return;
 		}
-
 		string pathOrg = AssetDatabase.GetAssetPath (one);
 
 		BuildProtobufFile (pathOrg);
@@ -93,26 +116,10 @@ public class EL_AssetRes{
 
 		EL_Path.Init(dir);
 
-		string protoc = "d:/protobuf-2.4.1/src/protoc.exe";
-		string protoc_gen_dir = "\"d:/protoc-gen-lua/plugin/protoc-gen-lua.bat\"";
-
 		foreach (string f in EL_Path.files) {
 			string name = Path.GetFileName(f);
 			string ext = Path.GetExtension(f);
 			if (!ext.Equals(".proto")) continue;
-
-			ProcessStartInfo info = new ProcessStartInfo();
-			info.FileName = protoc;
-			info.Arguments = " --lua_out=./ --plugin=protoc-gen-lua=" + protoc_gen_dir + " " + name;
-			info.WindowStyle = ProcessWindowStyle.Hidden;
-			info.UseShellExecute = true;
-			info.WorkingDirectory = dir;
-			info.ErrorDialog = true;
-
-			UnityEngine.Debug.Log(info.FileName + " " + info.Arguments);
-
-			Process pro = Process.Start(info);
-			pro.WaitForExit();
 		}
 		AssetDatabase.Refresh();
 	}

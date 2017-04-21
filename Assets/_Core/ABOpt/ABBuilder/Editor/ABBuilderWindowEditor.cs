@@ -107,7 +107,7 @@ public class ABBuilderWindowEditor : EditorWindow {
 
 			EG_GUIHelper.FG_Space(10);
 
-			builderRes.DrawView(this.m_Object,this.m_Property);
+			builderRes.DrawView(this.m_Object,this.m_Property,_assetList);
 		}
 		EG_GUIHelper.FEG_EndV ();
 	}
