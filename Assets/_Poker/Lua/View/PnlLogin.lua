@@ -3,6 +3,8 @@
 -- Time : 2017-04-19 17:10
 -- Desc : Tolua 要求 prefabname = lua.modelname
 do
+  local string = string;
+
   PnlLogin = {};
   local this = PnlLogin;
 
@@ -29,13 +31,17 @@ do
   end
 
   function PnlLogin.OnClickBtnYK(gobj)
-    mgrWwwGame:login("abcd",function(callWww,pars)
-      print(callWww.text);
-      local t = json.decode(callWww.text);
-      AppConst.SocketPort = 9999;
-      AppConst.SocketAddress = "127.0.0.1";
+    mgrWwwGame:login("abcd",this.OnCallLogin);
+  end
+
+  function PnlLogin.OnCallLogin(data,pars)
+    local tab = json.decode(data.text);
+    if tab.status == "success" and tab.data then
+      local address = string.split(tab.data.address,":");
+      AppConst.SocketAddress = address[1] or "127.0.0.1";
+      AppConst.SocketPort = tonumber(address[2]) or 9999;
       networkMgr:SendConnect();
-    end);
+    end
   end
 
   --单击事件--

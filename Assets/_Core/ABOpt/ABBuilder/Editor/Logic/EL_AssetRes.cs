@@ -26,7 +26,7 @@ public class EL_AssetRes{
 	BuildTarget m_buildTarget = BuildTarget.StandaloneWindows;
 
 	// 相对目录(要打包的资源必须在该目录下)
-	string m_rootRelative = "Builders";
+	string m_rootRelative = "Builds";
 
 	public void DrawView(SerializedObject obj,SerializedProperty field,List<UnityEngine.Object> list){
 		this.m_Object = obj;
@@ -119,7 +119,7 @@ public class EL_AssetRes{
 		foreach (string f in EL_Path.files) {
 			string name = Path.GetFileName(f);
 			string ext = Path.GetExtension(f);
-			if (!ext.Equals(".proto")) continue;
+			if (!ext.Equals(".meta")) continue;
 		}
 		AssetDatabase.Refresh();
 	}

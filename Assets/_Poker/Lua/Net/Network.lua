@@ -19,6 +19,12 @@ function Network.Start()
     Event.AddListener(Protocal.Msg, this.DemoResponse); 
 end
 
+function Network.Connect(address,post)
+	AppConst.SocketAddress = address or "127.0.0.1";
+	AppConst.SocketPort = post or 9999;
+  networkMgr:SendConnect();
+end
+
 --Socket消息--
 function Network.OnSocket(key, data)
     Event.Brocast(tostring(key), data);

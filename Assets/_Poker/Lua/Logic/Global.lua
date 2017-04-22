@@ -13,6 +13,8 @@ mgrWwwGame = gloabMgr.RequireOne("Net/WWWGame");
 
 TimeEx = gloabMgr.RequireOne("System/TimeEx");
 
+RndEx = gloabMgr.RequireOne("System/RndEx");
+
 json = gloabMgr.RequireOne("cjson");
 
 util = gloabMgr.RequireOne("3rd/cjson/util");

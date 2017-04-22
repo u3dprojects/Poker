@@ -30,6 +30,8 @@ do
     "System/Math",
     "System/TableEx",
     "System/TimeEx",
+    "System/RndEx",
+    "System/StringEx",
   }
 
   gloabMgr.Require(locTab);
