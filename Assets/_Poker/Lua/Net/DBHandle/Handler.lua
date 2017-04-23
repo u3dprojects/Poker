@@ -15,10 +15,12 @@ do
   -- 初始化事件
   function Handler.InitEvents()
     Event.AddListener(Protocal.OnSuccessConnect, that.OnSuccessConnect);
+    Event.AddListener(Protocal.Unload, that.Unload);
   end
 
   -- 卸掉事件
   function Handler.Unload()
+    Event.RemoveListener(Protocal.Unload);
     Event.RemoveListener(Protocal.OnSuccessConnect);
   end
 

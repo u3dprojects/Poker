@@ -22,5 +22,8 @@ json = gloabMgr.RequireOne("cjson");
 util = gloabMgr.RequireOne("3rd/cjson/util");
 
 -- 数据处理
---gloabMgr.RequireOne("Net.DBHandle.Handler");
---Handler.InitEvents();
+if Handler then
+  Handler.InitEvents();
+end
+gloabMgr.RequireOne("Net.DBHandle.Handler");
+Handler.InitEvents();

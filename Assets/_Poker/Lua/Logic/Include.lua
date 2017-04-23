@@ -55,7 +55,7 @@ do
   table.append(locTab,"Net/Network","Net/WWWNetwork","Net/WWWGame");
 
   gloabMgr.Require(locTab);
-  
+
   -- 协议（请求，响应）
   local tabReqRes = {
     "Net.protobuf.EchoMsg_pb",
@@ -63,9 +63,11 @@ do
     "Net.protobuf.Req_LoginMsg_pb",
     "Net.protobuf.Res_PlayerMsg_pb",
   }
-  -- gloabMgr.Require(tabReqRes);
-  
+  gloabMgr.Require(tabReqRes);
+
 end;
+
+
 
 
 
