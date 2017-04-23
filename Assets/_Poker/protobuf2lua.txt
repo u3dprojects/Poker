@@ -20,4 +20,12 @@ python setup.py build
 python setup.py install
 
 
+修改 protoc-gen-lua\plugin 下面的 protoc-gen-lua文件(无后缀)
+在该文件中查找 module
+在此处前后修改为：
+lua('local protobuf = require "protobuf.protobuf"\n')
+for i in includes:
+	lua('local %s_pb = require("%s_pb")\n' % (i, i))
+lua("module('%s_pb')\n" % env.filename.replace("/","."))
+
 然后打开框架，执行 Game/Build Protobuf-lua-gen File 菜单即可。
