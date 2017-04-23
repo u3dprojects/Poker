@@ -7,7 +7,7 @@ using LuaFramework;
 namespace Poker {
 	public class MsgPoker{
 		ushort cmd;
-		ushort status;
+		uint status;
 		byte[] body;
 
 		LuaByteBuffer luaData;
@@ -20,11 +20,11 @@ namespace Poker {
 			this.cmd = v;
 		}
 
-		public ushort GetStatus(){
+		public uint GetStatus(){
 			return this.status;
 		}
 
-		public void SetStatus(ushort v) {
+		public void SetStatus(uint v) {
 			this.status = v;
 		}
 
@@ -42,7 +42,7 @@ namespace Poker {
 
 		public void Init(ushort cmd,ByteBuffer buffer){
 			this.cmd = cmd;
-			this.status = buffer.ReadShort ();
+			this.status = (uint)buffer.ReadInt ();
 			this.luaData = buffer.ReadBufferLua();
 		}
 
@@ -52,11 +52,11 @@ namespace Poker {
 			MemoryStream ms = null;
 			using (ms = new MemoryStream()) {
 				ms.Position = 0;
-				uint msglen = (uint)body.Length + 8;
+				uint msglen = (uint)body.Length + 6;
 				BinaryWriter writer = new BinaryWriter(ms);
 				writer.Write((int)msglen);
 				writer.Write((short)cmd);
-				writer.Write ((short)status);
+				writer.Write ((int)status);
 				writer.Write (body);
 				writer.Flush();
 				ret = ms.ToArray();

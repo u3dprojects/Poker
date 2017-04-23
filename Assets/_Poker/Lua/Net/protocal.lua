@@ -6,6 +6,8 @@ Protocal = {
 	Exception   = '102';	--异常掉线
 	Disconnect  = '103';	--正常断线   
 	Message		= '104';	--接收消息
+	
+	EntryGame    = '257';  -- 进入游戏
 }
 
 --协议类型--

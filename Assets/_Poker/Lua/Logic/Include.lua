@@ -56,15 +56,6 @@ do
 
   gloabMgr.Require(locTab);
 
-  -- 协议（请求，响应）
-  local tabReqRes = {
-    "Net.protobuf.EchoMsg_pb",
-    "Net.protobuf.Req_DeskMsg_pb",
-    "Net.protobuf.Req_LoginMsg_pb",
-    "Net.protobuf.Res_PlayerMsg_pb",
-  }
-  gloabMgr.Require(tabReqRes);
-
 end;
 
 

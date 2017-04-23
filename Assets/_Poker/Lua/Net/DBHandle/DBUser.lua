@@ -4,9 +4,9 @@
 -- Desc : 
 -- Modify :
 
-local DBUser = {};
+local DBUser = {__name = "DBUser"};
 
-DBUser.__index = {__name = "DBUser"};
+DBUser.__index = DBUser;
 
 function DBUser.New()
 

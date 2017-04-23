@@ -35,12 +35,12 @@ do
   end
 
   function PnlLogin.OnCallLogin(data,pars)
+    print(data.text)
     local tab = json.decode(data.text);
     if tab.status == "success" and tab.data then
       local address = string.split(tab.data.address,":");
-      AppConst.SocketAddress = address[1] or "127.0.0.1";
-      AppConst.SocketPort = tonumber(address[2]) or 9999;
-      networkMgr:SendConnect();
+      Handler.GetUser():SetToken(tab.data.token);
+      Network.Connect(address[1],address[2])
     end
   end
 

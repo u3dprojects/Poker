@@ -19,7 +19,7 @@ end
 function Network.Connect(address,post)
   this.isConnect = false;
   AppConst.SocketAddress = address or "127.0.0.1";
-  AppConst.SocketPort = post or 9999;
+  AppConst.SocketPort = tonumber(post) or 9999;
   networkMgr:SendConnect();
 end
 
@@ -31,6 +31,7 @@ end
 --当连接建立时--
 function Network.OnConnect()
   this.isConnect = true;
+  log("OnConnect------->>>>");
   Event.Brocast(Protocal.OnSuccessConnect);
 end
 
