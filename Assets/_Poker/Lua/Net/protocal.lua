@@ -8,6 +8,7 @@ Protocal = {
 	Message		= '104';	--接收消息
 	
 	EntryGame    = '257';  -- 进入游戏
+	Heartbeat    = '258';  -- 心跳
 }
 
 --协议类型--

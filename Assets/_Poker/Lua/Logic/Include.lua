@@ -6,6 +6,9 @@
 do
   gloabMgr = require("Common/Import");
 
+  Require = gloabMgr.Require;
+  RequireOne = gloabMgr.RequireOne;
+
   -- 多重函数
   -- 初始化一个函数,调用的时候传一个table过去，会检测该table对象里面有没有该函数
   local function callFunc( funcName )
@@ -34,7 +37,7 @@ do
     "System/StringEx",
   }
 
-  gloabMgr.Require(locTab);
+  Require(locTab);
 
   locTab = {};
 
@@ -54,9 +57,13 @@ do
 
   table.append(locTab,"Net/Network","Net/WWWNetwork","Net/WWWGame");
 
-  gloabMgr.Require(locTab);
+  Require(locTab);
 
 end;
+
+
+
+
 
 
 

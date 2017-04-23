@@ -1,4 +1,4 @@
---- 交互层
+--- 处理器  - 请求，响应
 -- Anchor : Canyon
 -- Time : 2017-04-23 17:35
 -- Desc :
@@ -6,9 +6,9 @@
 
 do
 
-  local Require = gloabMgr.Require;
+  local Require = Require or gloabMgr.Require;
 
-  local RequireOne = gloabMgr.RequireOne;
+  local RequireOne = RequireOne or gloabMgr.RequireOne;
 
   -- 协议（请求，响应）
   local tabReqRes = {
@@ -17,6 +17,8 @@ do
     "Net.protobuf.Req_LoginMsg_pb",
     "Net.protobuf.Res_PlayerMsg_pb",
   }
+
+  local mgrDB = nil;
 
   Handler = {};
 
@@ -39,12 +41,13 @@ do
   -- socket 连接成功
   function Handler.OnSuccessConnect()
     Require(tabReqRes);
+    mgrDB = RequireOne("Net.DBHandle.MgrDB");
     that.EntryGame();
   end
 
   function Handler.EntryGame()
     local msg = request_Req_LoginMsg_pb.EnterGame();
-    msg.token = that.GetUser().token;
+    msg.token = mgrDB.GetUser().token;
     print(msg.token)
     local body = msg:SerializeToString();
 
@@ -64,16 +67,8 @@ do
     msg:ParseFromString(data);
 
     log('EntryGame: protocal:>'.. tostring(msgPoker:GetCmd()) ..' msg:>' .. msg.name .. "," .. type(msg));
---    coroutine.wait(0.005)
---    this.DemoMsg();
-  end
-
-  -- 取得用户对象
-  function Handler.GetUser()
-    if that.user == nil then
-      that.user = RequireOne("Net.DBHandle.DBUser").New();
-    end
-    return that.user;
+  --    coroutine.wait(0.005)
+  --    this.DemoMsg();
   end
   return Handler;
 end

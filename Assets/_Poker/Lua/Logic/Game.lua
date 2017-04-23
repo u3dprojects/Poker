@@ -9,7 +9,7 @@ local this = Game;
 function Game.OnInitOK()
     networkMgr:OnInit();
     
-    gloabMgr.Require("Logic.Global");
+    Require("Logic.Global");
     myApp:run();
 end
 

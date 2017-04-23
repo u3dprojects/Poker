@@ -39,7 +39,7 @@ do
     local tab = json.decode(data.text);
     if tab.status == "success" and tab.data then
       local address = string.split(tab.data.address,":");
-      Handler.GetUser():SetToken(tab.data.token);
+      MgrDB.GetUser():SetToken(tab.data.token);
       Network.Connect(address[1],address[2])
     end
   end
