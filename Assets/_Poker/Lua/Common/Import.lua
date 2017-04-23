@@ -48,6 +48,7 @@ do
     MG[k] = nil;
   end
 
+  -- 加载 一个或多个 Lua
   function M.Require(pars,wrap)
     local tp = type(pars);
 
@@ -60,6 +61,7 @@ do
     end
   end
 
+  -- 加载 一个 Lua
   function M.RequireOne(modname,wrap)
 
     string.gsub(modname,"/",".");
@@ -99,25 +101,45 @@ do
     end
   end
 
-  function M.ClearRequire(pars)
+  -- 清空一个或多个 lua
+  function M.ClearRequire(pars,wrap)
     local tp = type(pars);
 
     if tp == "table" then
       for _, var in pairs(pars) do
-        that.ClearRequireOne(var);
+        that.ClearRequireOne(var,wrap);
       end
     elseif tp == "string" then
-      that.ClearRequireOne(pars);
+      that.ClearRequireOne(pars,wrap);
     end
   end
 
-  function M.ClearRequireOne(modname)
+  -- 清空一个  lua
+  function M.ClearRequireOne(modname,wrap)
+    string.gsub(modname,"/",".");
+
+    if type(wrap) == "string" then
+      string.gsub(wrap,"/",".");
+      modname = wrap .. "." .. modname;
+    end
+
+    package.preload[modname] = nil;
+    package.loaded[modname] = nil;
+
+    string.gsub(modname,".","/");
     package.preload[modname] = nil;
     package.loaded[modname] = nil;
   end
 
-  function M.ClearRequire()
+  -- 清空 记录了的 lua
+  function M.ClearAllRequire()
     that.ClearRequire(recordRequire);
+  end
+
+  -- 重新加载
+  function M.ReRequire(pars,wrap)
+    that.ClearRequire(pars,wrap);
+    that.Require(pars,wrap);
   end
 
   return M;
