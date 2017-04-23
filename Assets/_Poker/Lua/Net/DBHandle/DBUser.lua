@@ -1,7 +1,7 @@
 --- 用户 数据(保护操作)
 -- Anchor : Canyon
 -- Time : 2017-04-23 17:35
--- Desc : 
+-- Desc :
 -- Modify :
 
 local DBUser = {__name = "DBUser"};
@@ -10,15 +10,22 @@ DBUser.__index = DBUser;
 
 function DBUser.New()
 
-	local self = {};
-  
+  local self = {};
+
   setmetatable(self, DBUser);
-  
+
   return self;
 end
 
 function DBUser:SetToken(tk)
-	self.token = tk;
+  self.token = tk;
+end
+
+function DBUser:Init(entity)
+  self.name = entity.name;
+  self.gold = entity.gold;
+  self.sycee = entity.sycee;
+  self.stone = entity.stone;
 end
 
 return DBUser;
