@@ -1,0 +1,13 @@
+package com.sojoys.chess.game.protobuf.request;
+
+option java_outer_classname="Req_DeskMsg";
+
+// 进入桌子
+message EnterDesk{
+	required int32 deskId = 1;		//桌子id
+}
+
+// 退出桌子
+message ExitDesk{
+	required int32 deskId = 1;		//桌子id
+}

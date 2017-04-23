@@ -1,0 +1,11 @@
+package com.sojoys.chess.game.protobuf;
+
+option java_outer_classname="EchoMsg";
+
+// 游戏服务器注册请求
+message GameServerRegister{
+	required string address = 1;		//地址
+	required int32 online = 2;		//在线数
+	required double cpuRatio = 3;		//CPU使用率
+	required int32 memoryRatio = 4;	//内存使用率
+}

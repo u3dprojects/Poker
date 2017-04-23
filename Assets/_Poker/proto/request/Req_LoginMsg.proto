@@ -1,0 +1,13 @@
+package com.sojoys.chess.game.protobuf.request;
+
+option java_outer_classname="Req_LoginMsg";
+
+// 游戏服务器注册请求
+message EnterGame{
+	required string token = 1;		//token
+}
+
+
+// 心跳
+message Heartbeat{
+}

@@ -1,0 +1,11 @@
+package com.sojoys.chess.game.protobuf.response;
+
+option java_outer_classname="Res_PlayerMsg";
+
+// 玩家信息
+message Player{
+	required string name = 1;		//名称
+	required int64 gold = 2;		//金币
+	required int64 sycee = 3;		//元宝
+	required int64 stone = 4;		//钻石
+}
