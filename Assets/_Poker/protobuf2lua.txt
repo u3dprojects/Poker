@@ -13,6 +13,9 @@ Path里面添加 ;%PythonHome% 即可
 
 解压到跟我相同路径，然后起cmd，到D:\protobuf-2.4.1\python 目录下，执行下面命令
 
+protobuf-2.4.1\python\google\protobuf\compiler 下面少了一个__init__.py
+从上一级复制一个空的__init__.py里面什么内容都没有即可
+
 python setup.py build
 python setup.py install
 

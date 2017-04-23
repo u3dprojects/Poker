@@ -64,11 +64,17 @@ public class EL_Protobuf  {
 		foreach (string f in EL_Path.files) {
 			string name = Path.GetFileName(f);
 			string ext = Path.GetExtension(f);
+			string rename = f.Replace (dir, "");
+
+			if (rename.IndexOf ("/") == 0) {
+				rename = rename.Substring (1);
+			}
+
 			if (!ext.Equals(".proto")) continue;
 
 			ProcessStartInfo info = new ProcessStartInfo();
 			info.FileName = protoc;
-			info.Arguments = " --lua_out=./ --plugin=protoc-gen-lua=" + protoc_gen_dir + " " + name;
+			info.Arguments = " --lua_out=./ --plugin=protoc-gen-lua=" + protoc_gen_dir + " " + rename;
 			info.WindowStyle = ProcessWindowStyle.Hidden;
 			info.UseShellExecute = true;
 			info.WorkingDirectory = dir;
