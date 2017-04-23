@@ -84,7 +84,7 @@ public class Poker_MsgPokerWrap
 		{
 			ToLua.CheckArgsCount(L, 1);
 			Poker.MsgPoker obj = (Poker.MsgPoker)ToLua.CheckObject(L, 1, typeof(Poker.MsgPoker));
-			ushort o = obj.GetStatus();
+			uint o = obj.GetStatus();
 			LuaDLL.lua_pushnumber(L, o);
 			return 1;
 		}
@@ -101,7 +101,7 @@ public class Poker_MsgPokerWrap
 		{
 			ToLua.CheckArgsCount(L, 2);
 			Poker.MsgPoker obj = (Poker.MsgPoker)ToLua.CheckObject(L, 1, typeof(Poker.MsgPoker));
-			ushort arg0 = (ushort)LuaDLL.luaL_checknumber(L, 2);
+			uint arg0 = (uint)LuaDLL.luaL_checknumber(L, 2);
 			obj.SetStatus(arg0);
 			return 0;
 		}
