@@ -174,3 +174,139 @@ function table.append(org,...)
     beg = beg + 1;
   end
 end
+
+
+local function shuffle(starNum, endNum, count)
+  local shuffleNum = {};
+  local math = math;
+
+  -- 判断是否存在
+  local function isExist(num)
+    for key, var in ipairs(shuffleNum) do
+      if var == num then
+        return true
+      end
+    end
+    return false
+  end
+
+  -- 生成随机数
+  local function generateShuffle()
+    if count > endNum then
+      count = endNum;
+    end
+
+    local number = math.random(starNum, endNum)
+    if isExist(number) then
+      -- 如果存在,则继续随机
+      generateShuffle()
+    else
+      -- 不存在,加入到随机数表中
+      table.insert(shuffleNum, number)
+      if #shuffleNum < count then
+        generateShuffle()
+      end
+    end
+  end
+
+  generateShuffle()
+
+  return shuffleNum;
+end
+
+-- 洗牌，混乱
+function table.shuffle(org)
+  local lens = #org;
+  local rtab = shuffle(1,lens,lens);
+
+  for k,v in ipairs(rtab) do
+    org[k],org[v] = org[v],org[k];
+  end
+end
+
+-- 洗牌，混乱 中取固定长度
+function table.subShuffle(org,count)
+  local lens = #org;
+  local rtab = shuffle(1,lens,count);
+
+  local ret = {};
+  for k,v in ipairs(rtab) do
+    ret[k] = org[v];
+  end
+
+  return ret;
+end
+
+-- 打印table
+function table.printTable( tb , title, notSortKey )
+  notSortKey = not (not notSortKey);
+
+  local tabNum = 0
+  local function stab( numTab )
+    return string.rep("    ", numTab)
+  end
+
+  local str = {}
+
+  local function _printTable( t )
+    table.insert( str, "{" )
+    tabNum = tabNum + 1
+
+    local keys = {}
+    for k, v in pairs( t ) do
+      table.insert( keys, k )
+    end
+
+    if not notSortKey then table.sort(keys) end
+
+    for _, k in pairs( keys ) do
+      local v = t[ k ]
+      local kk
+      if type(k) == "string" then
+        kk = "['" .. k .. "']"
+      else
+        kk = "[" .. tostring(k) .. "]"
+      end
+      if type(v) == "table" then
+        table.insert( str, string.format('\n%s%s = ', stab(tabNum),kk))
+        _printTable( v )
+      else
+        local vv = ""
+        if type(v) == "string" then
+          vv = string.format("\"%s\"", v)
+        elseif type(v) == "number" or type(v) == "boolean" then
+          vv = tostring(v)
+        else
+          vv = "[" .. type(v) .. "]"
+        end
+
+        if type(k) == "string" then
+          table.insert( str, string.format("\n%s%-18s = %s,", stab(tabNum), kk, string.gsub(vv, "%%", "?") ) )
+        else
+          table.insert( str, string.format("\n%s%-4s = %s,", stab(tabNum), kk, string.gsub(vv, "%%", "?") ) )
+          --print( string.format("%s%s", stab(tabNum), vv) )
+        end
+
+      end
+    end
+    tabNum = tabNum - 1
+
+    if tabNum == 0 then
+      table.insert( str, '}')
+    else
+      table.insert( str, '},')
+    end
+  end
+
+
+  local titleInfo = title or "table"
+  table.insert( str, string.format("\n----------begin[%s]----------[%s]\n", titleInfo, os.date("%H:%M:%S") )  )
+  if not tb or type(tb) ~= "table" then
+    print(tb)
+  else
+    _printTable(tb)
+  end
+
+  table.insert( str, string.format("\n----------end[%s]----------\n", titleInfo))
+  print( table.concat(str, ""))
+end
