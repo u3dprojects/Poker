@@ -6,6 +6,13 @@ function checkint(value)
   return math.round(checknumber(value))
 end
 
+-- 随机种子，短时间内避免种子重复
+function randomSeed()
+  local _time = os.time();
+  local _seed = tostring(_time):reverse():sub(1, 6);
+  math.randomseed(_seed);
+end
+
 function table.contains(tab, element)
   if tab == nil then
     return false
@@ -209,6 +216,7 @@ local function shuffle(starNum, endNum, count)
     end
   end
 
+  randomSeed();
   generateShuffle()
 
   return shuffleNum;
