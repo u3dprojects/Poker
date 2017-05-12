@@ -30,6 +30,11 @@ namespace Core.Kernel{
 		static public readonly string m_extLowerPng = ".png";
 		static public readonly string m_extLowerFab = ".prefab";
 
+		/// <summary>
+		/// 编辑器模式下是否通过加载ab资源得到
+		/// </summary>
+		static public bool m_isEdtiorLoadAsset = false;
+
 		// 解压资源目录根目录
 		static public string m_unCompressRoot = "GameName";
 
@@ -98,11 +103,12 @@ namespace Core.Kernel{
 		// 资源相对路径
 		static public string m_assetPlatformPath{
 			get{
+				string ret = string.Format("{0}{1}{2}{3}",m_gameAssetName , DSChar , m_platform , DSChar);
 				#if UNITY_EDITOR
-				return m_edtAssetPath + DSChar;
-				#else
-				return m_gameAssetName + DSChar + m_platform + DSChar;
+				if(!m_isEdtiorLoadAsset)
+					ret = string.Format("{0}{1}",m_edtAssetPath , DSChar);
 				#endif
+				return ret;
 			}
 		}
 
@@ -111,7 +117,7 @@ namespace Core.Kernel{
 		static public string m_appAssetPath{
 			get{
 				if (string.IsNullOrEmpty (_m_appAssetPath)) {
-					_m_appAssetPath = m_dataPath + m_assetPlatformPath;
+					_m_appAssetPath = string.Format("{0}{1}",m_dataPath , m_assetPlatformPath);
 				}
 				return _m_appAssetPath;
 			}
@@ -122,7 +128,7 @@ namespace Core.Kernel{
 		static public string m_appContentPath{
 			get{
 				if (string.IsNullOrEmpty (_m_appContentPath)) {
-					_m_appContentPath = m_streamingAssets + m_assetPlatformPath;
+					_m_appContentPath = string.Format("{0}{1}",m_streamingAssets , m_assetPlatformPath);
 				}
 				return _m_appContentPath;
 			}
@@ -136,20 +142,20 @@ namespace Core.Kernel{
 					string unCompressRoot = m_unCompressRoot.ToLower ();
 					#if UNITY_EDITOR
 						#if UNITY_STANDALONE_WIN
-						_m_appUnCompressPath =  "c:/" + unCompressRoot + DSChar + m_assetPlatformPath;
+						_m_appUnCompressPath = string.Format("{0}{1}{2}{3}","c:/" , unCompressRoot , DSChar , m_assetPlatformPath);
 						#else
 						int i = Application.dataPath.LastIndexOf('/');
-						_m_appUnCompressPath =  Application.dataPath.Substring(0, i + 1) + unCompressRoot + DSChar + m_assetPlatformPath;
+						_m_appUnCompressPath = Application.dataPath.Substring(0, i + 1) + unCompressRoot + DSChar + m_assetPlatformPath;
 						#endif
 					#else
 						#if UNITY_ANDROID || UNITY_IOS
-						_m_appUnCompressPath =  m_persistentDataPath + unCompressRoot + DSChar + m_assetPlatformPath;
+						_m_appUnCompressPath = string.Format("{0}{1}{2}{3}",m_persistentDataPath , unCompressRoot , DSChar , m_assetPlatformPath);
 						#elif UNITY_STANDALONE
 						// 平台(windos,mac)上面可行??? 需要测试
-						_m_appUnCompressPath =  m_persistentDataPath + unCompressRoot + DSChar + m_assetPlatformPath;
+						_m_appUnCompressPath = string.Format("{0}{1}{2}{3}",m_persistentDataPath , unCompressRoot , DSChar , m_assetPlatformPath);
 						#else
 						// 可行???
-						_m_appUnCompressPath =  m_persistentDataPath + unCompressRoot + DSChar + m_assetPlatformPath;
+						_m_appUnCompressPath = string.Format("{0}{1}{2}{3}",m_persistentDataPath , unCompressRoot , DSChar , m_assetPlatformPath);
 						#endif
 					#endif
 				}
