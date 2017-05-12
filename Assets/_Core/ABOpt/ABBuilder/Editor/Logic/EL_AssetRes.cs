@@ -10,7 +10,8 @@ using Core.Kernel;
 /// 类名 : 编译 资源
 /// 作者 : Canyon
 /// 日期 : 2017-04 -21 16:16
-/// 功能 : 
+/// 功能 : abname = 资源文件路径截取了相对文件夹[m_rootRelative]后,并去掉了后缀名的部分 (小写)
+///        abExtension  = 资源文件后缀名(小写)
 /// </summary>
 public class EL_AssetRes{
 
@@ -27,6 +28,12 @@ public class EL_AssetRes{
 
 	// 相对目录(要打包的资源必须在该目录下)
 	string m_rootRelative = "Builds";
+
+	// 是否为资源Asset添加bundle_name
+	bool m_isAbName = true;
+
+	// 是否为资源Asset添加ab资源后缀名
+	bool m_isAbSuffix = false;
 
 	public void DrawView(SerializedObject obj,SerializedProperty field,List<UnityEngine.Object> list){
 		this.m_Object = obj;
@@ -58,6 +65,25 @@ public class EL_AssetRes{
 		EG_GUIHelper.FEG_EndH ();
 		EG_GUIHelper.FG_Space(10);
 
+		EG_GUIHelper.FEG_BeginH();
+		{
+			EG_GUIHelper.FEG_BeginToggleGroup ("是否bundleName", ref m_isAbName);
+			{
+				Color defCol = GUI.color;
+				GUI.color = Color.cyan;
+				EditorGUILayout.LabelField ("不勾选则会清除列表里满足条件的bundlename");
+				GUI.color = defCol;
+
+				EG_GUIHelper.FG_Space(10);
+
+				m_isAbSuffix = EditorGUILayout.ToggleLeft("是否添加assetbundle后缀", m_isAbSuffix);
+			}
+			EG_GUIHelper.FEG_EndToggleGroup ();
+		}
+		EG_GUIHelper.FEG_EndH();
+		EG_GUIHelper.FG_Space(10);
+
+
 		//开始检查是否有修改
 		EditorGUI.BeginChangeCheck();
 
@@ -74,7 +100,7 @@ public class EL_AssetRes{
 
 		EG_GUIHelper.FG_Space(10);
 
-		if (GUILayout.Button("DoBuild"))
+		if (GUILayout.Button("DoBuildAssetU5"))
 		{
 			DoMake();
 		}
@@ -93,6 +119,9 @@ public class EL_AssetRes{
 		for (int i = 0; i < lens; i++) {
 			BuildOnew (m_list[i]);
 		}
+
+		// 清空没用的abname
+		AssetDatabase.RemoveUnusedAssetBundleNames ();
 	}
 
 	void BuildOnew(UnityEngine.Object one){
@@ -107,20 +136,74 @@ public class EL_AssetRes{
 			EditorUtility.DisplayDialog ("Tips", "来源文件不是文件夹!!!", "Okey");
 			return;
 		}
+
 		string pathOrg = AssetDatabase.GetAssetPath (one);
 
 		BuildProtobufFile (pathOrg);
 	}
 
-	static void BuildProtobufFile(string dir) {
+	void BuildProtobufFile(string dir) {
 
 		EL_Path.Init(dir);
 
+		int indexRelative = 0;
+		int lensRelative = m_rootRelative.Length;
+
 		foreach (string f in EL_Path.files) {
+			indexRelative = f.IndexOf (m_rootRelative);
+			if (indexRelative < 0) {
+				// UnityEngine.Debug.LogWarningFormat ("资源路径[{0}]中没有包含[{1}]值", f, m_rootRelative);
+				continue;
+			}
+
 			string name = Path.GetFileName(f);
 			string ext = Path.GetExtension(f);
-			if (!ext.Equals(".meta")) continue;
+
+//			string guid = AssetDatabase.AssetPathToGUID (f);
+//			UnityEngine.Debug.LogFormat ("guid = [{0}],name=[{1}],ext={2},filepath = [{3}]", guid,name,ext,f);
+
+			// 资源名称是截取了相对文件夹[m_rootRelative]后,并去掉了后缀名的部分
+			string abName = "";
+			if (m_isAbName) {
+				abName = f.Substring (indexRelative + lensRelative + 1);
+				abName = abName.Split ('.') [0];
+			}
+
+			string abSuffix = "";
+			if (m_isAbSuffix) {
+				abSuffix = ext.Substring (1);
+			}
+			SetAssetBundleInfo (f, abName,abSuffix);
 		}
 		AssetDatabase.Refresh();
+	}
+
+	void SetAssetBundleInfo(string assetPath,string abName = "",string abSuffix = ""){
+		abName = abName.Trim ();
+		bool isABName = !string.IsNullOrEmpty (abName);
+
+		AssetImporter assett = AssetImporter.GetAtPath (assetPath);
+		if (isABName) {
+			// 资源名
+			assett.assetBundleName = abName.ToLower ();
+		} else {
+			assett.assetBundleName = null;
+		}
+
+		if (!isABName) {
+			return;
+		}
+
+		abSuffix = abSuffix.Trim ();
+
+		bool isABSuffix = !string.IsNullOrEmpty (abSuffix);
+		if (isABSuffix) {
+			// 资源后缀名
+			assett.assetBundleVariant = abSuffix.ToLower ();
+		} else {
+			if (!string.IsNullOrEmpty (assett.assetBundleVariant)) {
+				assett.assetBundleVariant = null;
+			}
+		}
 	}
 }
