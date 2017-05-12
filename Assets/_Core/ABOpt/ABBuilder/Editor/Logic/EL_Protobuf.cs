@@ -62,15 +62,16 @@ public class EL_Protobuf  {
 		string protoc_gen_dir = "\"d:/protoc-gen-lua/plugin/protoc-gen-lua.bat\"";
 
 		foreach (string f in EL_Path.files) {
-			string name = Path.GetFileName(f);
+			// string name = Path.GetFileName(f);
 			string ext = Path.GetExtension(f);
+			if (!ext.Equals(".proto")) continue;
+
 			string rename = f.Replace (dir, "");
 
 			if (rename.IndexOf ("/") == 0) {
 				rename = rename.Substring (1);
 			}
 
-			if (!ext.Equals(".proto")) continue;
 
 			ProcessStartInfo info = new ProcessStartInfo();
 			info.FileName = protoc;
