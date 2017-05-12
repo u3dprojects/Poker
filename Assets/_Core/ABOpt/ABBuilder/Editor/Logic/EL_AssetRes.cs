@@ -117,14 +117,38 @@ public class EL_AssetRes{
 		}
 
 		for (int i = 0; i < lens; i++) {
-			BuildOnew (m_list[i]);
+			MakeOneFolder (m_list[i]);
 		}
 
 		// 清空没用的abname
 		AssetDatabase.RemoveUnusedAssetBundleNames ();
+
+		EditorReadWriteSupport.m_isEdtiorLoadAsset = true;
+
+		string outputPath = "";
+		switch (m_buildTarget) {
+		case BuildTarget.Android:
+			outputPath = EditorReadWriteSupport.m_androidPath;
+			break;
+		case BuildTarget.iOS:
+			outputPath = EditorReadWriteSupport.m_iosPath;
+			break;
+		default:
+			outputPath = EditorReadWriteSupport.m_windowsPath;
+			break;
+		}
+
+		if (Directory.Exists (outputPath)) {
+			Directory.Delete (outputPath);
+		}
+		Directory.CreateDirectory (outputPath);
+
+		BuildPipeline.BuildAssetBundles (outputPath, BuildAssetBundleOptions.None, m_buildTarget);
+
+		// 可以在这个地方去加载manifest，读取资源，记录关系
 	}
 
-	void BuildOnew(UnityEngine.Object one){
+	void MakeOneFolder(UnityEngine.Object one){
 		if (one == null)
 			return;
 		
@@ -139,10 +163,10 @@ public class EL_AssetRes{
 
 		string pathOrg = AssetDatabase.GetAssetPath (one);
 
-		BuildProtobufFile (pathOrg);
+		MakeChildsInFolder (pathOrg);
 	}
 
-	void BuildProtobufFile(string dir) {
+	void MakeChildsInFolder(string dir) {
 
 		EL_Path.Init(dir);
 
@@ -156,7 +180,7 @@ public class EL_AssetRes{
 				continue;
 			}
 
-			string name = Path.GetFileName(f);
+			// string name = Path.GetFileName(f);
 			string ext = Path.GetExtension(f);
 
 //			string guid = AssetDatabase.AssetPathToGUID (f);

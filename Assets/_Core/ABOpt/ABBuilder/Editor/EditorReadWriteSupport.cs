@@ -8,7 +8,7 @@ namespace Core.Kernel{
 	/// 日期 : 2017-03-28 13:50
 	/// 功能 : 编辑模式，和打包的情况下
 	/// </summary>
-	public class ReadWriteSupport : ReadWriteHelp{
+	public class EditorReadWriteSupport : ReadWriteHelp{
 		
 	}
 }
