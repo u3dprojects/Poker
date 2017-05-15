@@ -9,7 +9,7 @@ namespace Core.Kernel
 	/// 日期 : 2017-05-12 23:23
 	/// 功能 : 
 	/// </summary>
-	public static class ToolExComponent
+	public class ComponentEx
 	{
 		/// <summary>
 		/// 添加组件
@@ -76,7 +76,7 @@ namespace Core.Kernel
 		/// <param name="trsf">Trsf.</param>
 		/// <param name="valChild">Value child.</param>
 		/// <param name="trsfParent">Trsf parent.</param>
-		static public Transform Find(Transform trsf, string valChild,Transform trsfParent = null){
+		static public Transform Find(Transform trsf, string valChild,Transform trsfParent){
 			if (trsfParent != null)
 				return Find (trsfParent, valChild);
 			return Find (trsf, valChild);
