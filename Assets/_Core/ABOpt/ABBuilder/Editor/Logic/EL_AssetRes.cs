@@ -71,7 +71,7 @@ public class EL_AssetRes{
 			{
 				Color defCol = GUI.color;
 				GUI.color = Color.cyan;
-				EditorGUILayout.LabelField ("不勾选则会清除列表里满足条件的bundlename");
+				EditorGUILayout.LabelField ("不勾选:",string.Format("1.删除文件列表所生成的资源 \n2.清除该列表下所有bundleName"),EG_GUIHelper.ToOptions(0,30));
 				GUI.color = defCol;
 
 				EG_GUIHelper.FG_Space(10);
@@ -138,10 +138,17 @@ public class EL_AssetRes{
 			break;
 		}
 
-		if (Directory.Exists (outputPath)) {
-			Directory.Delete (outputPath);
+		if (!m_isAbName) {
+			// 递归
+			bool recursive = true;
+			if (Directory.Exists (outputPath)) {
+				Directory.Delete (outputPath, recursive);
+			}
 		}
-		Directory.CreateDirectory (outputPath);
+
+		if (!Directory.Exists (outputPath)) {
+			Directory.CreateDirectory (outputPath);
+		}
 
 		BuildPipeline.BuildAssetBundles (outputPath, BuildAssetBundleOptions.None, m_buildTarget);
 

@@ -118,6 +118,7 @@ namespace Core.Kernel{
 			get{
 				if (string.IsNullOrEmpty (_m_appAssetPath)) {
 					_m_appAssetPath = string.Format("{0}{1}",m_dataPath , m_assetPlatformPath);
+					_m_appAssetPath = ReplaceSeparator (_m_appAssetPath);
 				}
 				return _m_appAssetPath;
 			}
@@ -129,6 +130,7 @@ namespace Core.Kernel{
 			get{
 				if (string.IsNullOrEmpty (_m_appContentPath)) {
 					_m_appContentPath = string.Format("{0}{1}",m_streamingAssets , m_assetPlatformPath);
+					_m_appContentPath = ReplaceSeparator (_m_appContentPath);
 				}
 				return _m_appContentPath;
 			}
@@ -158,6 +160,7 @@ namespace Core.Kernel{
 						_m_appUnCompressPath = string.Format("{0}{1}{2}{3}",m_persistentDataPath , unCompressRoot , DSChar , m_assetPlatformPath);
 						#endif
 					#endif
+					_m_appUnCompressPath = ReplaceSeparator (_m_appUnCompressPath);
 				}
 				return _m_appUnCompressPath;
 			}
@@ -185,6 +188,15 @@ namespace Core.Kernel{
 				m_platform = platformIOS;
 				return m_appContentPath;
 			}
+		}
+
+		/// <summary>
+		/// 统一路径格式
+		/// </summary>
+		/// <returns>The separator.</returns>
+		/// <param name="path">Path.</param>
+		static public string ReplaceSeparator(string path){
+			return path.Replace ('\\', '/');
 		}
 	}
 }
