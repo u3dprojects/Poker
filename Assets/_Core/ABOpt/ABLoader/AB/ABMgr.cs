@@ -40,9 +40,17 @@ namespace Core.Kernel
 		/// </summary>
 		public float m_fDuration = 5.0f;
 
+		/// <summary>
+		/// 加载了的对象实例化记录
+		/// </summary>
 		Dictionary<string,ABInfo> m_dicInfos = new Dictionary<string, ABInfo> ();
 
 		List<ABInfo> m_list = new List<ABInfo>();
+
+		/// <summary>
+		/// 资源信息
+		/// </summary>
+		AssetBundleManifest m_manifest = null;
 	
 		void OnEnable(){
 			InvokeRepeating ("_ReleaseFunc", m_fDelay, m_fDuration);
@@ -118,5 +126,12 @@ namespace Core.Kernel
 			}
 		}
 
+		/// <summary>
+		/// 加载资源管理文件
+		/// </summary>
+		/// <param name="rPath">R path.</param>
+		public void LoadManifest(string rPath){
+			
+		}
 	}
 }

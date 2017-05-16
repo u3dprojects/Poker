@@ -108,5 +108,18 @@ namespace Core.Kernel
 			}
 
 		}
+
+		/// <summary>
+		/// 内存资源对象
+		/// </summary>
+		/// <returns>The asset.</returns>
+		/// <param name="assetName">Asset name.</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public T GetAsset<T>(string assetName) where T : UnityEngine.Object{
+			if (m_assetBundle != null) {
+				return m_assetBundle.LoadAsset<T> (assetName);
+			}
+			return null;
+		}
 	}
 }
