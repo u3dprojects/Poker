@@ -133,5 +133,14 @@ namespace Core.Kernel
 		public void LoadManifest(string rPath){
 			
 		}
+
+		/// <summary>
+		/// Url地址
+		/// </summary>
+		/// <returns>The file path.</returns>
+		/// <param name="rPath">R path.</param>
+		public string UrlFilePath(string rPath){
+			return "";
+		}
 	}
 }
