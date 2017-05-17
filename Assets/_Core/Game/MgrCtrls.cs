@@ -17,6 +17,7 @@ public class MgrCtrls  {
 	public class Names
 	{
 		public const string ABMgr = "ABMgr";
+		public const string WWWMgr = "WWWMgr";
 	}
 
 	/// <summary>
