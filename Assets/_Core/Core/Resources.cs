@@ -9,7 +9,7 @@ namespace Core.Kernel{
 	/// 日期 : 2017-03-28 17:06
 	/// 功能 : 读取Assets下面的资源
 	/// </summary>
-	public class ResourcesDevelop : ReadWriteHelp {
+	public partial class Resources : ReadWriteHelp {
 
 		/// <summary>
 		/// Load the specified path.
@@ -70,9 +70,5 @@ namespace Core.Kernel{
 		static public UnityEngine.Object Load4Prefab(string path){
 			return Load4Develop (path, m_extLowerFab);
 		}
-	}
-
-	public class Resources : ResourcesDevelop {
-		
 	}
 }
